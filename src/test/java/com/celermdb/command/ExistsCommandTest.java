@@ -4,34 +4,35 @@ import com.celermdb.storage.InMemoryStore;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DeleteCommandTest {
+public class ExistsCommandTest {
 
     @Test
-    void shouldDeleteValue(){
+    void shouldExistsValue(){
 
         InMemoryStore store = new InMemoryStore();
         store.set("name", "Adit");
 
-        DeleteCommand command = new DeleteCommand("name");
+        ExistsCommand command = new ExistsCommand("name");
 
         String result = command.execute(store);
 
         assertEquals("1", result);
-        assertFalse(store.exists("name"));
+
+        assertTrue(store.exists("name"));
 
     }
 
     @Test
     void shouldReturnZeroOnNotFound(){
+
         InMemoryStore store = new InMemoryStore();
 
-        DeleteCommand command = new DeleteCommand("unknown");
+        ExistsCommand command = new ExistsCommand("unknown");
 
         String result = command.execute(store);
 
         assertEquals("0", result);
     }
-    
 }

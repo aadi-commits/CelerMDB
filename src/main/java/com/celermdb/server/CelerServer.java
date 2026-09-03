@@ -2,6 +2,7 @@ package com.celermdb.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
@@ -22,6 +23,22 @@ public class CelerServer {
             System.out.println(
                     "Client connected: " + client.getRemoteAddress()
             );
+
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+
+            int bytesRead = client.read(buffer);
+
+            buffer.flip();
+
+            System.out.println("Bytes received: " + bytesRead);
+
+            String message = new String(
+                    buffer.array(),
+                    0,
+                    bytesRead
+            );
+
+            System.out.println("Message Received: " + message);
         }
     }
 
